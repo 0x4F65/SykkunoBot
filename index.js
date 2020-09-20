@@ -10,7 +10,7 @@ const poll = require('./poll')
 const sendMessage = require('./send-message')
 
 const client = new Commando.CommandoClient({
-    owner: '186464746206265344',
+    owner: config.botOwner,
     commandPrefix: config.prefix,
     disableEveryone: true,
     unknownCommandResponses: false,
@@ -26,7 +26,6 @@ client.on('ready', () => {
         ['misc','misc commands'],
         ['voice','voice commands']
     ])
-    //.registerDefaults() //remove commando in-built commands
     .registerCommandsIn(path.join(__dirname, 'cmds'))
 
     //poll command
@@ -35,12 +34,10 @@ client.on('ready', () => {
     const guild = client.guilds.cache.get(config.serverId)
     const channel = guild.channels.cache.get(config.channelId)
 
+    //To be cleaned up
     sendMessage(channel, 'SykknoBot is starting up...', 5)
 
-    //SEVER COMMANDS
-    // command(client, 'intro', (message) =>{
-    //     message.channel.send("What's up guys, Sykkuno here !")
-    // })
+
 
     command(client, 'servers', message =>{
         client.guilds.cache.forEach(guild =>{
@@ -61,6 +58,7 @@ client.on('ready', () => {
         message.channel.send("I'm just a bot minding my own business...")
     })
 
+    //Help information
     command(client, 'help', message =>{
         message.channel.send(`
         T-This is the help menu. I uhh hope this helps :)
@@ -73,7 +71,7 @@ client.on('ready', () => {
     })
 
 
-    //HELP
+    //Help status on bot
        const { prefix } = config
        client.user.setPresence({
            activity: {
